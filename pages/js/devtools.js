@@ -99,6 +99,7 @@ var page_getKnockoutInfo = function(shouldSerialize) {
 			try{
 				var props2 = Object.getOwnPropertyNames(data);		
 				for (i = 0; i < props2.length; ++i){
+					
 					//create a empty object that contains the whole vm in a expression. contains even the functions.
 					copy2[props2[i]] = ko.utils.unwrapObservable(data[props2[i]]);	
 					//show the basic properties of the vm directly, without the need to collapse anything
@@ -125,7 +126,14 @@ var page_getKnockoutInfo = function(shouldSerialize) {
 	catch(error){
 		copy["error"]=error;
 	}
-	return copy;
+
+	var ordered = {};
+
+	Object.keys(copy).sort().forEach(function(key) {
+		ordered[key] = copy[key];
+	  });
+
+	return ordered;
 };
 
 var createEditMethods=function(){
